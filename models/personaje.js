@@ -7,7 +7,7 @@ const sequelize = new Sequelize('challenge_alkemy_nodejs', 'root', '123456', {
 
 const Personaje = sequelize.define('Personaje',{
 
-    id: {
+    idPersonaje: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,

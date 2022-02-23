@@ -1,9 +1,10 @@
 const {Router} = require('express');
-const { crearPersonaje } = require('../controllers/personajes.controller');
+
+const { guardarUsuario } = require('../controllers/usuarios.controller');
 
 const router = Router();
 
-router.post('/', crearPersonaje);
+router.post('/', guardarUsuario);
 
 
 module.exports = router;

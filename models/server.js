@@ -11,8 +11,12 @@ class Server {
         this.port = process.env.PORT;
 
         //TODO paths
-        this.registerPath = '/auth/register';
-        this.personajePath = '/characters';
+        this.buscarPath               =   '/buscar';
+        this.buscarPersonajesPath     =   '/characters/buscar';
+        this.generoPath               =   '/genero';
+        this.registerPath             =   '/auth/register';
+        this.personajePath            =   '/characters';
+        this.peliculasPath            =   '/movies';
 
         //Conexion a BD
         this.dbConnection();
@@ -51,8 +55,13 @@ class Server {
 
     //Routes
     routes(){
-        this.app.use(this.registerPath, require('../routes/usuarios.route'));
+        this.app.use(this.buscarPath, require('../routes/busquedas.route'));
+        this.app.use(this.buscarPersonajesPath, require('../routes/busquedas.personaje.route'));
+        this.app.use(this.generoPath, require('../routes/generos.route'));
+        this.app.use(this.peliculasPath, require('../routes/peliculas.route'));
         this.app.use(this.personajePath, require('../routes/personajes.route'));
+        this.app.use(this.registerPath, require('../routes/usuarios.route'));
+
     }
 
 

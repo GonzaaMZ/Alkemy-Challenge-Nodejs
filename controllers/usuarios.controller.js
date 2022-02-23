@@ -6,6 +6,9 @@ const Usuario = require('../models/usuario');
 
 const guardarUsuario = async (req, res = response) => {
 
+    Usuario.sync();
+
+
     const {nombre, email} = req.body;
 
     const data = {
@@ -21,12 +24,6 @@ const guardarUsuario = async (req, res = response) => {
     } catch (error) {
         console.log(error)
     }
-
-    
-
-
-
-
 
 }
 

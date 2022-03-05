@@ -1,7 +1,9 @@
 const { response } = require("express");
+const res = require("express/lib/response");
 const { Op } = require("sequelize");
 
 const Pelicula = require("../models/pelicula");
+const Personaje = require("../models/personaje");
 
 
 
@@ -23,7 +25,9 @@ const buscar = (req, res = response) => {
 
 }
 
-
+/*
+    Busquedas de peliculas
+*/
 
 const buscarNombre = async (name = '', res = response) => {
 
@@ -45,7 +49,7 @@ const buscarGenero = async (genre = '', res = response) => {
 
     const filtroGenero = await Pelicula.findAll({
         where: {
-            genero: {
+            GeneroIdGenero: {
                 [Op.substring] : genre
             }
         }
@@ -81,6 +85,7 @@ const ordenar = async (order = '', res = response) => {
 
 
 }
+
 
 
 module.exports = {

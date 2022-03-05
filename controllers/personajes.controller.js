@@ -1,5 +1,6 @@
 
 const { response } = require('express');
+const Pelicula = require('../models/pelicula');
 const Personaje = require('../models/personaje');
 
 
@@ -15,6 +16,14 @@ const obtenerPersonajes = async (req, res = response) => {
 
 
 const crearPersonaje = async (req, res = response) => {
+
+    /*
+    Personaje.belongsToMany(Pelicula, {
+    through: 'Personajes_Peliculas',
+    as: 'Pel',
+    foreignKey: 'IdPersonaje',
+    });
+    */
 
     Personaje.sync();
 
@@ -62,7 +71,7 @@ const actualizarPersonaje = async (req, res = response) => {
     try {
         const personajeActualizar = await Personaje.update(data, {
             where: {
-                id: id
+                idPersonaje: id
             }
         });
 
@@ -89,7 +98,7 @@ const borrarPersonaje = async (req, res = response) => {
 
     const personajeBorrar = await Personaje.destroy({
         where: {
-            id: id
+            idPersonaje: id
         }
     })
 

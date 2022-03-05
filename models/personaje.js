@@ -14,7 +14,13 @@ const Personaje = sequelize.define('Personaje',{
         autoIncrement: true
     },
    
-    imagen:{type: DataTypes.STRING},
+    img:{
+        type: DataTypes.STRING,
+        get() {
+            const rawValue = this.getDataValue('img');
+            return rawValue ? rawValue.toUpperCase() : null;
+          }
+    },
     
     nombre:{
         type: DataTypes.STRING,

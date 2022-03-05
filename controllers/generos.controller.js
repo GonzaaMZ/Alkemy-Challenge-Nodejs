@@ -12,7 +12,7 @@ const obtenerGeneros = async () => {
 
 const crearGenero = async (req, res = response) => {
 
-    Genero.sync();
+    await Genero.sync({force: true});
 
     const {nombre,...body} = req.body;
     

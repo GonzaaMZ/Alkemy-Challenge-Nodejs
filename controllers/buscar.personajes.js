@@ -42,9 +42,15 @@ const buscarPersonajeEdad = async (edad , res = response) => {
         }
     });
 
-    res.json({
-        results: filtroEdad
-    })
+    if (!filtroEdad) {
+        throw new Error('No hay resultados')
+    }else{
+        res.json({
+            results: filtroEdad
+        })
+    }
+
+    
 
 }
 

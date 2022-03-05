@@ -1,5 +1,5 @@
 
-const {Sequelize, DataTypes} = require('sequelize')
+const {Sequelize, DataTypes, Model} = require('sequelize')
 
 const Personaje = require('../models/personaje');
 
@@ -17,7 +17,13 @@ const Pelicula = sequelize.define('Pelicula', {
         autoIncrement: true
     },
     
-    caratula:{type: DataTypes.STRING},
+    img:{
+        type: DataTypes.STRING,
+        get() {
+            const rawValue = this.getDataValue('img');
+            return rawValue ? rawValue.toUpperCase() : null;
+          }
+    },
     
     titulo:{
         type: DataTypes.STRING,
@@ -26,7 +32,7 @@ const Pelicula = sequelize.define('Pelicula', {
 
     calificacion: {
         type: DataTypes.INTEGER
-    }
+    },
 
 },
 {
@@ -34,8 +40,11 @@ const Pelicula = sequelize.define('Pelicula', {
     updatedAt: false
 });
 
-Pelicula.belongsToMany(Personaje, {through: 'PersonajesPeliculas'});
 
-Personaje.belongsToMany(Pelicula, {through: 'PersonajesPeliculas'});
 
 module.exports = Pelicula;
+
+
+/*
+
+*/

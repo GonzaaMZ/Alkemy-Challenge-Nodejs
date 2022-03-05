@@ -1,5 +1,6 @@
 const { response } = require('express');
 const Pelicula = require('../models/pelicula');
+const Personaje = require('../models/personaje');
 
 
 
@@ -15,7 +16,15 @@ const obtenerPeliculas = async (req, res = response) => {
 
 const crearPelicula = async (req, res = response) => {
 
-    Pelicula.sync();
+    /*
+    Pelicula.belongsToMany(Personaje, {
+        through: 'Personajes_Peliculas',
+        as: 'Per',
+        foreignKey: 'idPelicula',
+    });
+    */
+
+    await Pelicula.sync();
 
     const {titulo,...body} = req.body;
     
@@ -32,7 +41,6 @@ const crearPelicula = async (req, res = response) => {
     } catch (error) {
         console.log(error);
     }
-
 
 }
 
@@ -60,7 +68,7 @@ const actualizarPelicula = async (req, res = response) => {
  
         const peliculaActualizar = await Pelicula.update(data, {
             where: {
-               id : id
+               idPelicula : id
             }
         });
 
@@ -88,7 +96,7 @@ const borrarPelicula = async (req, res = response) => {
 
     const peliculaBorrar = await Pelicula.destroy({
         where: {
-            id: id
+            idPelicula: id
         }
     })
 

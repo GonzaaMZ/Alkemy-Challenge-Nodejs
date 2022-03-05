@@ -3,6 +3,8 @@ const {Sequelize, DataTypes} = require('sequelize')
 
 const Pelicula = require('../models/pelicula')
 
+
+
 const sequelize = new Sequelize('challenge_alkemy_nodejs', 'root', '123456', {
     host: 'localhost',
     dialect: 'mysql',
@@ -32,5 +34,6 @@ const Genero = sequelize.define('Genero', {
 });
 
 Genero.hasMany(Pelicula);
+
 
 module.exports = Genero;

@@ -27,12 +27,9 @@ const actualizarImagen = async (req ,res = response) => {
     let modelo;
 
   
-
     //Enviando los datos hacia la funcion (subirArchivo) para procesar el archivo
     const nombre = await subirArchivo(req.files, undefined , tabla);
     
-    //Asigno el archivo img en este caso al modelo
-   // modelo.img = nombre;
 
     //Preparo el modelo a guardar segun la coleccion recibida (pelicula o personaje)
     switch(tabla){
@@ -43,15 +40,20 @@ const actualizarImagen = async (req ,res = response) => {
                 }
             });
             if(!modelo){
-                return res.status(400).json({msg: `No existe un usuario con el id ${id}`
+                return res.status(400).json({msg: `No existe un personaje con el id ${id}`
             });
             }
+            
             break;
 
         case 'peliculas':
-            modelo = await Pelicula.findByPk(id);
+            modelo = await Pelicula.update({img: nombre},{
+                where: {
+                    idPelicula: id
+                }
+            });
             if(!modelo){
-                return res.status(400).json({msg: `No existe un producto con el id ${id}`
+                return res.status(400).json({msg: `No existe un pelicula con el id ${id}`
             });
             }
             break;
@@ -62,17 +64,7 @@ const actualizarImagen = async (req ,res = response) => {
             })
 
     }
-
-    //Limpiar imagenes repetidas y anteriores
-    if (modelo.img){
-        //Tomo la ruta de la imagen
-        const pathImagen = path.join(__dirname, '../uploads', tabla, modelo.img);
-        //Compruebo si existe la imagen
-        if (fs.existsSync(pathImagen) ){
-            fs.unlinkSync(pathImagen); //Si existe, la elimino
-        }
-    }
-
+    
 
     //Respuesta de mi server
     res.json(modelo);
@@ -82,24 +74,35 @@ const actualizarImagen = async (req ,res = response) => {
 
 const mostrarImagen = async (req, res = response) => {
 
-    const {id, coleccion} = req.params;
+    const {id, tabla} = req.params;
 
     let modelo;
 
     //Preparo el modelo a guardar segun la coleccion recibida (usuario o producto)
-    switch(coleccion){
-        case 'usuarios':
-            modelo = await Usuario.findById(id);
+    switch(tabla){
+        case 'personajes':
+            modelo = await Personaje.findOne({
+                where: {
+                    idPersonaje: id
+                },
+                attributes: ['img']  
+            }) 
             if(!modelo){
-                return res.status(400).json({msg: `No existe un usuario con el id ${id}`
+                return res.status(400).json({msg: `No existe un personaje con el id ${id}`
             });
             }
             break;
 
-        case 'productos':
-            modelo = await Producto.findById(id);
+        case 'peliculas':
+            modelo = await Pelicula.findOne({
+                where: {
+                    idPelicula: id
+                },
+                attributes: ['img']
+            }) 
             if(!modelo){
-                return res.status(400).json({msg: `No existe un producto con el id ${id}`})
+                return res.status(400).json({msg: `No existe una pelicula con el id ${id}`
+            });
             }
             break;
         
@@ -110,17 +113,20 @@ const mostrarImagen = async (req, res = response) => {
 
     }
 
-    if (modelo.img){
-        //Tomo la ruta de la imagen
-        const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
-        //Compruebo si existe la imagen
-        if (fs.existsSync(pathImagen) ){
-            return res.sendFile(pathImagen)
+        if (modelo.getDataValue('img')) {
+            
+            //Tomo la ruta de la imagen
+            const pathImagen = path.join(__dirname, '../uploads',  tabla, modelo.getDataValue('img'));
+            
+            //Compruebo si existe la imagen
+            if (fs.existsSync(pathImagen) ){
+                return res.sendFile(pathImagen)
+            }
         }
         
-    }
-    const pathNoImage = path.join(__dirname, '../assets/no-image.jpg');
-     return res.sendFile(pathNoImage);
+        const pathNoImage = path.join(__dirname, '../assets/no-image.jpg');
+        console.log(pathNoImage);
+        return res.sendFile(pathNoImage);
     
 }
 

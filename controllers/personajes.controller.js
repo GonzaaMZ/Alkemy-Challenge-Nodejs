@@ -7,25 +7,17 @@ const Personaje = require('../models/personaje');
 const obtenerPersonajes = async (req, res = response) => {
 
     const personajes = await Personaje.findAll({
-        attributes: ['idPersonaje', 'nombre', 'imagen']
+        attributes: ['idPersonaje', 'nombre', 'img']
     })
-
-    res.json(personajes)
+        
+    res.json({personajes})
 
 }
 
 
 const crearPersonaje = async (req, res = response) => {
 
-    /*
-    Personaje.belongsToMany(Pelicula, {
-    through: 'Personajes_Peliculas',
-    as: 'Pel',
-    foreignKey: 'IdPersonaje',
-    });
-    */
-
-    Personaje.sync();
+    Personaje.sync({alter: true});
 
     const {nombre, edad, ...body} = req.body;
 

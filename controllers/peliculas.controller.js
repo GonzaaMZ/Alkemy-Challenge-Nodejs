@@ -7,8 +7,11 @@ const Personaje = require('../models/personaje');
 const obtenerPeliculas = async (req, res = response) => {
 
     const peliculas = await Pelicula.findAll({
-        attributes: ['idPelicula','titulo', 'caratula','createdAt']
+        attributes: ['idPelicula','titulo', 'img','createdAt']
     })
+
+
+
 
     res.json(peliculas)
 
@@ -24,7 +27,7 @@ const crearPelicula = async (req, res = response) => {
     });
     */
 
-    await Pelicula.sync();
+    await Pelicula.sync({alter: true});
 
     const {titulo,...body} = req.body;
     

@@ -37,6 +37,7 @@ const Personaje = sequelize.define('Personaje',{
     historia: {type: DataTypes.TEXT},
 
 },
+
 {
     tableName: 'Personajes',
     timestamps: false

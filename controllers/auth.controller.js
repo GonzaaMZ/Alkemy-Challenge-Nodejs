@@ -1,9 +1,11 @@
 
 const { response } = require('express');
 const { Op } = require('sequelize');
-const { generarJWT } = require('../helpers/generar-jwt');
-const Usuario = require('../models/usuario');
 
+const { enviarEmail } = require('../helpers/enviar-email');
+const { generarJWT } = require('../helpers/generar-jwt');
+
+const Usuario = require('../models/usuario');
 
 
 //Registro de usuario
@@ -21,8 +23,10 @@ const guardarUsuario = async (req, res = response) => {
     try {
         const usuario = await Usuario.create(data);    
         
-        return res.status(200).json({usuario});
+        await enviarEmail(email);
         
+        return res.status(200).json({usuario});
+
     } catch (error) {
         console.log(error)
     }
@@ -70,6 +74,8 @@ const login = async (req, res = response) => {
     }
 
 }
+
+
 
 
 

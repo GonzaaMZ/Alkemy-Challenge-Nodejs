@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
 
-const { cargarArchivo, actualizarImagen, mostrarImagen } = require('../controllers/uploads.controller');
+const { actualizarImagen, mostrarImagen } = require('../controllers/uploads.controller');
 const { tablasPermitidas } = require('../helpers/db-validators');
 
 
@@ -9,8 +9,6 @@ const { validarArchivoSubir } = require('../middlewares/validar-archivo');
 const { validarCampos } = require('../middlewares/validar-campo');
 
 const router = Router();
-
-router.post('/', validarArchivoSubir, cargarArchivo);
 
 
 router.put('/:tabla/:id', [

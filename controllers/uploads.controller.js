@@ -7,18 +7,6 @@ const Personaje = require('../models/personaje');
 const Pelicula = require('../models/pelicula');
 
 
-const cargarArchivo = async (req ,res = response) => {
-
-    try {
-        //Enviando los datos hacia la funcion (subirArchivo) para procesar el archivo
-        const nombre = await subirArchivo(req.files, undefined );
-        res.json({nombre});
-        
-    } catch (msg) {
-        res.status(400).json({msg});        
-    }
-}
-
 
 const actualizarImagen = async (req ,res = response) => {
 
@@ -132,7 +120,6 @@ const mostrarImagen = async (req, res = response) => {
 
 
 module.exports = {
-    cargarArchivo,
     actualizarImagen,
     mostrarImagen,
 }

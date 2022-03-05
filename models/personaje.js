@@ -44,6 +44,5 @@ const Personaje = sequelize.define('Personaje',{
 
 });
 
-//Personaje.belongsToMany(Pelicula, {through: 'PersonajePeliculas'});
 
 module.exports = Personaje;

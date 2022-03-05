@@ -1,9 +1,12 @@
 const {Router} = require('express');
-const { crearGenero } = require('../controllers/generos.controller');
+
+const { crearGenero, obtenerGeneros } = require('../controllers/generos.controller');
 
 
 const router = Router();
 
+
+router.get('/', obtenerGeneros)
 
 router.post('/', crearGenero);
 

@@ -1,18 +1,22 @@
 const { response } = require("express");
-const { Op } = require("sequelize");
 
 const Genero = require("../models/genero");
 
 
-const obtenerGeneros = async () => {
+const obtenerGeneros = async (req, res = response) => {
 
+    const generos = await Genero.findAll({
+        attributes: ['idGenero', 'nombre']
+    })
+
+    return res.json(generos);
 
 
 }
 
 const crearGenero = async (req, res = response) => {
 
-    await Genero.sync({force: true});
+    await Genero.sync({alter: true});
 
     const {nombre,...body} = req.body;
     
@@ -35,6 +39,6 @@ const crearGenero = async (req, res = response) => {
 
 
 module.exports = {
-    crearGenero
-
+    crearGenero,
+    obtenerGeneros
 }

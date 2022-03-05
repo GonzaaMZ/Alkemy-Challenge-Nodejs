@@ -1,5 +1,4 @@
 const { response } = require("express");
-const res = require("express/lib/response");
 const { Op } = require("sequelize");
 
 const Pelicula = require("../models/pelicula");

@@ -9,23 +9,12 @@ const obtenerPeliculas = async (req, res = response) => {
     const peliculas = await Pelicula.findAll({
         attributes: ['idPelicula','titulo', 'img','createdAt']
     })
-
-
-
-
+    
     res.json(peliculas)
-
 }
 
 const crearPelicula = async (req, res = response) => {
 
-    /*
-    Pelicula.belongsToMany(Personaje, {
-        through: 'Personajes_Peliculas',
-        as: 'Per',
-        foreignKey: 'idPelicula',
-    });
-    */
 
     await Pelicula.sync({alter: true});
 
